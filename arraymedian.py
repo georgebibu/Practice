@@ -1,0 +1,29 @@
+nums1=[1,3]
+nums2=[2,4]
+left=0
+right=0
+res=[]
+n=len(nums1)
+m=len(nums2)
+while(left<n and right<m):
+    if(nums1[left]<nums2[right]):
+        res.append(nums1[left])
+        left+=1
+    elif(nums1[left]>nums2[right]):
+        res.append(nums2[right])
+        right+=1
+    else:
+        res.append(nums1[left])
+        res.append(nums2[right])
+        left+=1
+        right+=1
+while(left<n):
+    res.append(nums1[left])
+    left+=1
+while(right<m):
+    res.append(nums2[right])
+    right+=1
+if((m+n)%2==0):
+    print((res[int((m+n)/2)]+res[(int((m+n)/2))-1])/2)
+else:
+    print(res[int((m+n)/2)])
