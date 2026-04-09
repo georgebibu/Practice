@@ -1,25 +1,10 @@
-n=int(input("Enter length of list:"))
-list=[]
-alist=[]
-done=[]
-for i in range(n):
-    x=input("Enter string:")
-    list.append(x)
-for i in range(n):
-    if list[i] in done:
-        continue
-    alist.append(list[i])
-    for j in range(i+1,n):
-        str=list[i]
-        flag=0
-        for x in list[j]:
-            if x in str:
-                str=str.replace(x,'',1)
-            else:
-               flag=1
-        if flag==0:
-            alist.append(list[j])
-            done.append(list[j])
-    print(alist)
-    alist.clear()
-    done.append(list[i])
+#Given an array of strings strs, group all anagrams together into sublists. You may return the output in any order.
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        res = defaultdict(list)
+        for i in strs:
+            temp = [0]*26
+            for j in i:
+                temp[ord(j) - ord("a")] += 1
+            res[tuple(temp)].append(i)
+        return list(res.values())
