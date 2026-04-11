@@ -1,17 +1,23 @@
-k=int(input("Enter frequency:"))
-dict={}
-list=[]
-out=[]
-n=int(input("Enter length of list:"))
-for i in range(n):
-    x=int(input("Enter integer:"))
-    list.append(x)
-for i in list:
-    if i not in dict:
-        dict[i]=1
-    else:
-        dict[i]=dict[i]+1
-    if i not in out and dict[i]>=k:
-        out.append(i)
-print(out)
-    
+#Given an integer array nums and an integer k, return the k most frequent elements within the array.
+#The test cases are generated such that the answer is always unique.
+#You may return the output in any order.
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        x = {}
+        res = {}
+        length = len(nums)
+        for i in range(length):
+            x[nums[i]] = 1 + x.get(nums[i], 0)
+            res[i + 1] = []
+        for i in x:
+            freq = x[i]
+            res[freq].append(i)
+        print(res)
+        result = []
+        i = length
+        while k > 0 and i > 0:
+            for j in res[i]:
+                result.append(j)
+                k -= 1
+            i -= 1
+        return result
