@@ -1,43 +1,21 @@
-def encode(strs: list[str]) -> str:
-    res=""
-    for i in strs:
-        if i=="":
-            res+="$.$"
-        res+=i
-        res+="%.%"
-    res=res[:-1]
-    res=res[:-1]
-    res=res[:-1]
-    return res
-def decode(s: str) -> list[str]:
-    strs=[]
-    s=list(s)
-    n=len(s)
-    temp=""
-    i=0
-    while i<n:
-        if s[i]=="%" and i<n-2:
-            if s[i+1]=="." and s[i+2]=="%":
-                if temp=="":
-                    i+=3
-                    continue
-                strs.append(temp)
-                temp=""
-                i+=3
-                continue
-        if s[i]=="$" and i<n-2:
-            if s[i+1]=="." and s[i+2]=="$":
-                strs.append("")
-                temp=""
-                i+=3
-                continue
-        temp+=s[i]
-        i+=1
-    if temp!="":
-        strs.append(temp)
-    return strs
-input=["","   ","!@#$%^&*()_+","LongStringWithNoSpaces","Another, String With, Commas"]
-cipher=encode(input)
-print(f"Cipher:{cipher}\n")
-plain=decode(cipher)
-print(f"Plain:{plain}")
+#Design an algorithm to encode a list of strings to a string. The encoded string is then sent over the network and is decoded back to the original list of strings.
+class Solution:
+
+    def encode(self, strs: List[str]) -> str:
+        encoded_str = ""
+        for i in strs:
+            encoded_str += f"{len(i)}#{i}"
+        return encoded_str
+
+    def decode(self, s: str) -> List[str]:
+        strs = []
+        i = 0
+        while i < len(s):
+            decoded_str = ""
+            j = i
+            while s[j] != '#':
+                j += 1
+            length = int(s[i : j])
+            strs.append(s[j + 1 : j + 1 + length])
+            i = j + 1 + length
+        return strs
