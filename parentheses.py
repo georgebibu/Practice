@@ -1,38 +1,18 @@
-stack=[]
-flag=0
-p=0
-s=input("Enter string consisting of parentheses:")
-for i in s:
-    if i=='(' or i=='[' or i=='{':
-        stack.append(i)
-        p+=1
-    elif i==')':
-        if stack[p-1]!='(':
-            flag=1
-            break
-        else:
-            del stack[p-1]
-            p-=1
-    elif i==']':
-        if stack[p-1]!='[':
-            flag=1
-            break
-        else:
-            del stack[p-1]
-            p-=1
-    elif i=='}':
-        if stack[p-1]!='{':
-            flag=1
-            break
-        else:
-            del stack[p-1]
-            p-=1
-    else:
-        flag=1
-        break
-if len(stack)!=0:
-    flag=1
-if flag==0:
-    print("String is valid")
-else:
-    print("String is not valid")
+#You are given a string s consisting of the following characters: '(', ')', '{', '}', '[' and ']'.
+#The input string s is valid if and only if:
+#Every open bracket is closed by the same type of close bracket.#Open brackets are closed in the correct order.
+#Every close bracket has a corresponding open bracket of the same type.
+#Return true if s is a valid string, and false otherwise.
+class Solution:
+    def isValid(self, s: str) -> bool:
+        k = {')' : '(', ']' : '[', '}' : '{'}
+        stack = []
+        for i in s:
+            if i not in k:
+                stack.append(i)
+            else:
+                if stack == [] or k[i] != stack.pop():
+                    return False
+        if stack != []:
+            return False
+        return True
