@@ -1,17 +1,15 @@
-n=int(input("Enter length of array:"))
-inp=[]
-pre=[1]
-post=[1]
-out=[]
-for i in range(n):
-    x=int(input("Enter element:"))
-    inp.append(x)
-    pre.append(1)
-    post.append(1)
-    out.append(1)
-for i in range(1,n+1):
-     pre[i]=inp[i-1]*pre[i-1]
-     post[n-i]=inp[n-i]*post[n-i+1]
-for i in range(n):
-     out[i]=pre[i]*post[i+1]
-print(out)
+#Given an integer array nums, return an array output where output[i] is the product of all the elements of nums except nums[i].
+#Each product is guaranteed to fit in a 32-bit integer.
+#Follow-up: Could you solve it in O(n) time without using the division operation?
+class Solution:
+    def productExceptSelf(self, nums: List[int]) -> List[int]:
+        prefix = [1]
+        postfix = [1]
+        length = len(nums)
+        for i in range(1, length):
+            prefix.append(prefix[-1] * nums[i - 1])
+            postfix.insert(0, postfix[0] * nums[length - i])
+        output = []
+        for i in range(length):
+            output.append(prefix[i] * postfix[i])
+        return output
