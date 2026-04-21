@@ -1,29 +1,19 @@
-board=[['5', '3', '', '', '7', '', '', '', ''],
-       ['6', '', '', '1', '9', '5', '', '', ''],
-       ['', '9', '8', '', '', '', '', '6', ''],
-       ['8', '', '', '', '6', '', '', '', '3'],
-       ['4', '', '', '8', '', '3', '', '', '1'],
-       ['7', '', '', '', '2', '', '', '', '6'],
-       ['', '6', '', '', '', '', '2', '8', ''],
-       ['', '', '', '4', '1', '9', '', '', '5'],
-       ['', '', '', '', '8', '', '', '7', '9']]
-rows={0:[],1:[],2:[],3:[],4:[],5:[],6:[],7:[],8:[]}
-cols={0:[],1:[],2:[],3:[],4:[],5:[],6:[],7:[],8:[]}
-sect={(0,0):[],(0,1):[],(0,2):[],(1,0):[],(1,1):[],(1,2):[],(2,0):[],(2,1):[],(2,2):[]}
-flag=0
-for r in range(9):
-    for c in range(9):
-        if board[r][c]!="":
-            if board[r][c] in rows[r] or board[r][c] in cols[c] or board[r][c] in sect[(r//3,c//3)]:
-                print("Sudoku board not valid")
-                flag=1
-                break
-            rows[r].append(board[r][c])
-            cols[c].append(board[r][c])
-            sect[(r//3,c//3)].append(board[r][c])
-        else:
-            continue
-    if flag==1:
-        break
-if flag==0:
-    print("Sudoku board is valid")
+#You are given a 9 x 9 Sudoku board board. A Sudoku board is valid if the following rules are followed:
+#Each row must contain the digits 1-9 without duplicates.
+#Each column must contain the digits 1-9 without duplicates.
+#Each of the nine 3 x 3 sub-boxes of the grid must contain the digits 1-9 without duplicates.
+#Return true if the Sudoku board is valid, otherwise return false
+#Note: A board does not need to be full or be solvable to be valid.
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        rows, cols, boxes = defaultdict(set), defaultdict(set), defaultdict(set)
+        for i in range(9):
+            for j in range(9):
+                if board[i][j] == ".":
+                    continue
+                if board[i][j] in rows[i] or board[i][j] in cols[j] or board[i][j] in boxes[(i // 3, j // 3)]:
+                    return False
+                rows[i].add(board[i][j])
+                cols[j].add(board[i][j])
+                boxes[(i // 3, j // 3)].add(board[i][j])
+        return True
